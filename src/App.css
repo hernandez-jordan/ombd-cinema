@@ -1,0 +1,65 @@
+.App {
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+.card-item {
+  transition: transform 0.2s ease;
+}
+
+.card-item:hover > .card-content {
+  opacity: 1;
+  /* display: flex !important; */
+  transition: 0.5s ease;
+}
+
+.card-content {
+  /* display: none !important; */
+  transition: 0.5s ease;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  transition: 0.2s ease;
+  opacity: 0;
+  bottom: 0;
+  font-size: 20px;
+  padding: 20px 0px;
+  text-align: center;
+}
+
+body {
+  background: #141414;
+  color: #ffffff;
+}
+
+.row {
+  flex-wrap: nowrap;
+  overflow-x: overlay;
+  overflow-y: hidden;
+  width: 100%;
+  display: -webkit-inline-box;
+}
+
+.image-container {
+  grid-auto-flow: column;
+  height: auto;
+  overflow: visible;
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.image-container:hover .overlay {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  transition: 0.3s ease;
+  opacity: 0;
+  bottom: 0px;
+  font-size: 20px;
+  padding: 20px 0px 40px 0px;
+}
