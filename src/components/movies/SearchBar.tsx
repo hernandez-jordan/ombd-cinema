@@ -1,4 +1,11 @@
-import { Box, FormControl, TextField } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  FormControlLabel,
+  Switch,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import { useCallback, useContext, useEffect, useState } from "react";
 import getMovies from "../../service/getMovies";
 import {
@@ -11,6 +18,14 @@ import {
 } from "../../store";
 
 const style = {
+  formControl: {
+    width: { xs: "100%", sm: 250 },
+  },
+  form: {
+    display: "flex",
+    alignItems: "baseline",
+    justifyContent: "space-around",
+  },
   textfield: {
     color: "white",
     width: { xs: "100%", sm: 250 },
@@ -35,13 +50,14 @@ export default function SearchBar() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as UserDispatch;
   const { movieName } = state as StateSearch;
+  const [plot, setPlot] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     console.log("movie name =", movieName);
     e.preventDefault();
     dispatch({ type: UserActionType.SEARCH });
     try {
-      await getMovies({ movieName }, dispatch);
+      await getMovies({ movieName, dispatch, plot });
       dispatch({ type: UserActionType.SUCCESS });
     } catch (err) {
       console.log(err);
@@ -49,10 +65,18 @@ export default function SearchBar() {
     }
   }
 
+  function checkPlot() {
+    setPlot(!plot);
+  }
+
+  useEffect(() => {
+    console.log(plot);
+  }, [plot]);
+
   return (
     <Box>
-      <FormControl sx={{ width: { sx: "100%", sm: 250 } }}>
-        <form onSubmit={handleSubmit}>
+      <FormControl sx={style.formControl}>
+        <form onSubmit={handleSubmit} className="form">
           <TextField
             type="text"
             label="Search"
@@ -68,6 +92,13 @@ export default function SearchBar() {
               })
             }
           />
+          <Tooltip title="Plot" arrow>
+            <FormControlLabel
+              sx={{ ml: 1 }}
+              control={<Switch onChange={checkPlot} />}
+              label={plot ? "Full" : "Short"}
+            />
+          </Tooltip>
         </form>
       </FormControl>
     </Box>
