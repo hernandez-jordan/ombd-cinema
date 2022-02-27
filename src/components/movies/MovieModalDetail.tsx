@@ -34,6 +34,12 @@ const style = {
   },
   icon: {
     color: "white",
+    transition:
+      "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 0.2s ,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    "&:hover": {
+      color: "#ff0000",
+      transform: "scale(1.5)",
+    },
   },
   cardContainer: {
     borderRadius: 0,
@@ -49,8 +55,16 @@ const style = {
     ml: 10,
     color: "black",
     "&:hover": {
-      color: "pink",
+      bgcolor: "#1976d2",
     },
+  },
+  buttonContainer: {
+    bgcolor: "black",
+    py: 2,
+    px: 1,
+    color: "white",
+    display: "flex",
+    justifyContent: "center",
   },
 };
 
@@ -79,26 +93,13 @@ export default function MovieModalDetail({
           alt={Title}
           sx={{ height: "100%" }}
         />
-        <Box
-          sx={{
-            bgcolor: "black",
-            py: 2,
-            px: 1,
-            color: "white",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
+        <Box sx={style.buttonContainer}>
           <Tooltip title="add to favorite" arrow>
             <IconButton className="icon" sx={style.icon}>
               <FavoriteIcon />
             </IconButton>
           </Tooltip>
-          <Button
-            sx={{ bgcolor: "white", width: 100, ml: 10, color: "black" }}
-            size="medium"
-            startIcon={<PlayArrowIcon />}
-          >
+          <Button sx={style.button} size="medium" startIcon={<PlayArrowIcon />}>
             Play
           </Button>
         </Box>

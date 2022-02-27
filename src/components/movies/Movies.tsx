@@ -1,42 +1,21 @@
-import {
-  Card,
-  CardActions,
-  CardMedia,
-  Grid,
-  IconButton,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useContext } from "react";
 import { StateContext, StateSearch } from "../../store";
 import SearchBar from "./SearchBar";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import MovieModal from "./MovieModal";
+import Loader from "../loader/Loader";
+import MovieCard from "./MovieCard";
 
 const style = {
   gridContainer: {
     flexWrap: "nowrap",
     display: "-webkit-inline-box",
   },
-  cardContainer: {
-    cursor: "auto",
-    alignItems: "stretch",
-    transition: "transform 0.2s",
-    height: "100%",
-    "&:hover": {
-      cursor: "pointer",
-      transform: "scale(1.03) translate3d(0px, -10px, 200px)",
-    },
-  },
-  icon: {
-    color: "white",
-  },
 };
 
 export default function Movies() {
   const state = useContext(StateContext);
-  const { movies, isLoading } = state as StateSearch;
+  const { isLoading } = state as StateSearch;
 
   return (
     <>
@@ -59,35 +38,7 @@ export default function Movies() {
         <SearchBar />
       </Box>
       <Grid container spacing={3} className="row" sx={style.gridContainer}>
-        {movies &&
-          movies.map((item, key) => {
-            const { Poster, Title, imdbID } = item;
-
-            return (
-              <Grid item key={key} xs={6} sm={4} md={3}>
-                <Card className="image-container" sx={style.cardContainer}>
-                  <CardMedia
-                    component="img"
-                    image={Poster}
-                    alt={Title}
-                    sx={{ height: "100%" }}
-                  />
-                  <CardActions className="overlay">
-                    <Box>
-                      <Tooltip title="add to favorite" arrow>
-                        <IconButton className="icon" sx={style.icon}>
-                          <FavoriteIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                    <Box>
-                      <MovieModal imdbID={imdbID} />
-                    </Box>
-                  </CardActions>
-                </Card>
-              </Grid>
-            );
-          })}
+        {isLoading ? <Loader /> : <MovieCard />}
       </Grid>
     </>
   );

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import getMoviesById from "../../service/getMovieById";
 import MovieModalDetail from "./MovieModalDetail";
@@ -67,10 +67,6 @@ export default function MovieModal(props: MovieModalProps) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    console.log(movie, "movie");
-  }, [movie]);
 
   return (
     <Box>
