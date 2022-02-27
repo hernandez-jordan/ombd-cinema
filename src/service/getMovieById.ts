@@ -1,15 +1,13 @@
 import axios from "axios";
 import { API_KEY } from "../constants";
-import { UserActionType, UserDispatch } from "../store";
+import { UserAction, UserActionType } from "../store";
 
 interface ISearchId {
   imdbID: string;
+  dispatch: (value: UserAction) => void;
 }
 
-export default async function getMoviesById(
-  { imdbID }: ISearchId,
-  dispatch: UserDispatch
-) {
+export default async function getMoviesById({ imdbID, dispatch }: ISearchId) {
   const url = `http://www.omdbapi.com/?i=${imdbID}&plot=full&apiKey=${API_KEY}`;
   try {
     const response = await axios(url);
