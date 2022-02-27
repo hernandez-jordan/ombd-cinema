@@ -69,10 +69,6 @@ export default function SearchBar() {
     setPlot(!plot);
   }
 
-  useEffect(() => {
-    console.log(plot);
-  }, [plot]);
-
   return (
     <Box>
       <FormControl sx={style.formControl}>
