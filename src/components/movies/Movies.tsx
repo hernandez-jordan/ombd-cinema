@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardActions,
   CardMedia,
@@ -55,7 +54,7 @@ export default function Movies() {
           py={{ xs: 1, sm: 2, md: 3 }}
           pt={{ xs: 2 }}
         >
-          Watch List
+          Movie List
         </Typography>
         <SearchBar />
       </Box>

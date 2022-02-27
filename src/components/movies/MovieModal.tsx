@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import getMoviesById from "../../service/getMovieById";
 import MovieModalDetail from "./MovieModalDetail";
@@ -19,14 +19,17 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const style = {
   modal: {
+    overflow: "scroll",
+  },
+  container: {
     position: "absolute" as "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "black",
+    bgcolor: "'background.paper'",
     boxShadow: 24,
     overflow: "scroll",
+    width: { xs: "100%", sm: 400 },
   },
   icon: {
     color: "white",
@@ -57,13 +60,17 @@ export default function MovieModal(props: MovieModalProps) {
 
   const handleClickOpen = async () => {
     try {
-      await getMoviesById({ imdbID }, dispatch);
+      await getMoviesById({ imdbID, dispatch });
       dispatch({ type: UserActionType.SET_MODAL_OPEN });
       console.log(movie, "movie");
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    console.log(movie, "movie");
+  }, [movie]);
 
   return (
     <Box>
@@ -73,16 +80,15 @@ export default function MovieModal(props: MovieModalProps) {
         </IconButton>
       </Tooltip>
       <Modal
-        sx={{
-          overflow: "scroll",
-        }}
+        sx={style.modal}
+        BackdropProps={{ invisible: true }}
         keepMounted
         open={isOpen}
         onClose={handleClickClose}
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style.modal}>
+        <Box className="test" sx={style.container}>
           <MovieModalDetail {...(movie as unknown as MovieDetailsWithId)} />
         </Box>
       </Modal>

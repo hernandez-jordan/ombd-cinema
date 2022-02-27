@@ -43,6 +43,15 @@ const style = {
     bgcolor: "black",
     color: "white",
   },
+  button: {
+    bgcolor: "white",
+    width: 100,
+    ml: 10,
+    color: "black",
+    "&:hover": {
+      color: "pink",
+    },
+  },
 };
 
 interface MovieModalProps {
