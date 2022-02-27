@@ -6,8 +6,8 @@ export enum UserActionType {
   SEARCH = "SEARCH",
   ERROR = "ERROR",
   SUCCESS = "SUCCESS",
-  IS_MODAL_OPEN = "IS_MODAL_OPEN",
-  IS_MODAL_CLOSE = "IS_MODAL_CLOSE",
+  SET_MODAL_OPEN = "SET_MODAL_OPEN",
+  SET_MODAL_CLOSE = "SET_MODAL_CLOSE",
   FIELD = "FIELD",
   SET_MOVIE_DETAIL = "SET_MOVIE_DETAIL",
   SET_MOVIE_DETAIL_BY_ID = "SET_MOVIE_DETAIL_BY_ID",
@@ -23,8 +23,8 @@ export type UserAction =
         | UserActionType.SEARCH
         | UserActionType.ERROR
         | UserActionType.SUCCESS
-        | UserActionType.IS_MODAL_OPEN
-        | UserActionType.IS_MODAL_CLOSE;
+        | UserActionType.SET_MODAL_OPEN
+        | UserActionType.SET_MODAL_CLOSE;
     }
   | {
       type: UserActionType.FIELD;
