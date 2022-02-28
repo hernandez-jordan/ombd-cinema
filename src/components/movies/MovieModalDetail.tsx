@@ -20,6 +20,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
+import { splitStringToArray } from "../../util/string-conversions";
 
 const style = {
   modal: {
@@ -70,8 +71,8 @@ const style = {
 
 export default function MovieModalDetail({
   Title,
-  Actors,
   Awards,
+  Actors,
   Poster,
   Rated,
   Genre,
@@ -84,6 +85,9 @@ export default function MovieModalDetail({
   const { isTruncate } = state as StateSearch;
   const dispatch = useContext(DispatchContext) as UserDispatch;
   const clickHandle = () => dispatch({ type: UserActionType.SET_TRUNCATE });
+
+  const newActors = splitStringToArray(Actors!);
+
   return (
     <>
       <Card sx={style.cardContainer}>
@@ -136,9 +140,20 @@ export default function MovieModalDetail({
         </Box>
         <Box sx={{ p: 2 }}>
           <Typography variant="body2">Director: {Director}</Typography>
-          <Typography gutterBottom variant="body2">
-            Actors: {Actors?.split("")}
-          </Typography>
+          <Box display="flex" py={1}>
+            <Typography variant="body2">Actors: </Typography>
+            <Box pl={1}>
+              {newActors &&
+                newActors.map((actor, key) => {
+                  return (
+                    <Box key={key}>
+                      <Typography variant="body2">{actor}</Typography>
+                    </Box>
+                  );
+                })}
+            </Box>
+          </Box>
+
           <Typography gutterBottom variant="caption">
             Awards: {Awards}
           </Typography>
