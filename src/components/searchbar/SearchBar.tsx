@@ -6,7 +6,7 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import getMovies from "../../service/getMovies";
 import {
   DispatchContext,
@@ -52,8 +52,9 @@ export default function SearchBar() {
   const { movieName } = state as StateSearch;
   const [plot, setPlot] = useState(false);
 
+  const checkPlot = () => setPlot(!plot);
+
   async function handleSubmit(e: React.FormEvent) {
-    console.log("movie name =", movieName);
     e.preventDefault();
     dispatch({ type: UserActionType.SEARCH });
     try {
@@ -63,10 +64,6 @@ export default function SearchBar() {
       console.log(err);
       dispatch({ type: UserActionType.ERROR });
     }
-  }
-
-  function checkPlot() {
-    setPlot(!plot);
   }
 
   return (

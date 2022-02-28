@@ -19,8 +19,9 @@ export default async function getMovies({
     console.log(url, "url", PLOT, "plot");
     const response = await axios(url);
     if (response.status === 200 && response.data) {
-      const payload = response.data.Search;
-      console.log(payload, "payload");
+      //notice
+      const payload = response.data.Search.slice(0, 5);
+      console.log(payload, "payload", url, "url");
       dispatch({ type: UserActionType.SET_MOVIE_DETAIL, payload });
     }
   } catch (error) {

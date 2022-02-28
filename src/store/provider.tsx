@@ -8,8 +8,9 @@ const initialState: StateSearch = {
   isLoading: false,
   error: "",
   movie: [],
-  imdbID: "",
+  favoriteMovies: [],
   isOpen: false,
+  isTruncate: true,
 };
 
 export interface StateSearch {
@@ -18,8 +19,9 @@ export interface StateSearch {
   isLoading: boolean;
   error: string;
   movie: MovieDetailsWithId[];
-  imdbID: string;
+  favoriteMovies: MovieDetails[];
   isOpen: boolean;
+  isTruncate: boolean;
 }
 
 export interface MovieDetails {

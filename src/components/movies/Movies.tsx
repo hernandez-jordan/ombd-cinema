@@ -2,7 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useContext } from "react";
 import { StateContext, StateSearch } from "../../store";
-import SearchBar from "./SearchBar";
+import SearchBar from "../searchbar/SearchBar";
 import Loader from "../loader/Loader";
 import MovieCard from "./MovieCard";
 
@@ -39,6 +39,9 @@ export default function Movies() {
       </Box>
       <Grid container spacing={3} className="row" sx={style.gridContainer}>
         {isLoading ? <Loader /> : <MovieCard />}
+      </Grid>
+      <Grid container spacing={3} className="row" sx={style.gridContainer}>
+        {/* //TODO:add favorites */}
       </Grid>
     </>
   );

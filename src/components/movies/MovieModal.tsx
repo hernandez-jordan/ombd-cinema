@@ -15,6 +15,8 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { IconButton, Tooltip } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+
+//TODO:add cancel button for mobile?
 import CancelIcon from "@mui/icons-material/Cancel";
 
 const style = {
@@ -51,22 +53,21 @@ interface MovieModalProps {
 export default function MovieModal(props: MovieModalProps) {
   const { imdbID } = props;
   const state = useContext(StateContext);
-  const dispatch = useContext(DispatchContext) as UserDispatch;
   const { movie, isOpen } = state as StateSearch;
+  const dispatch = useContext(DispatchContext) as UserDispatch;
 
   const handleClickClose = () => {
     dispatch({ type: UserActionType.SET_MODAL_CLOSE });
   };
 
-  const handleClickOpen = async () => {
+  async function handleClickOpen() {
     try {
       await getMoviesById({ imdbID, dispatch });
       dispatch({ type: UserActionType.SET_MODAL_OPEN });
-      console.log(movie, "movie");
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   return (
     <Box>

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 import {
   DispatchContext,
@@ -68,22 +68,22 @@ const style = {
   },
 };
 
-interface MovieModalProps {
-  imdbID: string;
-}
-
 export default function MovieModalDetail({
   Title,
   Actors,
+  Awards,
   Poster,
   Rated,
   Genre,
   Plot,
   Released,
-  Writer,
+  Type,
+  Director,
 }: MovieDetailsWithId) {
-  const [truncate, setTruncate] = useState(true);
-  const clickHandle = () => setTruncate(!truncate);
+  const state = useContext(StateContext);
+  const { isTruncate } = state as StateSearch;
+  const dispatch = useContext(DispatchContext) as UserDispatch;
+  const clickHandle = () => dispatch({ type: UserActionType.SET_TRUNCATE });
   return (
     <>
       <Card sx={style.cardContainer}>
@@ -105,11 +105,23 @@ export default function MovieModalDetail({
         </Box>
         <Box sx={{ px: 2, pb: 1 }}>
           <Box display="flex" justifyContent="space-between" pb={1}>
-            <Typography variant="caption" gutterBottom>
-              Release date: {Released}
-            </Typography>
-            <Typography variant="caption" gutterBottom>
-              Rating: {Rated}
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="caption" gutterBottom>
+                Release date: {Released}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography variant="caption" gutterBottom>
+                Type: {Type}
+              </Typography>
+              <Typography variant="caption" gutterBottom>
+                Rating: {Rated}
+              </Typography>
+            </Box>
+          </Box>
+          <Box>
+            <Typography gutterBottom noWrap={isTruncate} variant="body1">
+              {Title}
             </Typography>
           </Box>
           <CardActionArea
@@ -117,19 +129,24 @@ export default function MovieModalDetail({
             disableRipple
             onClick={clickHandle}
           >
-            <Typography noWrap={truncate} variant="body2">
+            <Typography noWrap={isTruncate} variant="body2">
               {Plot}
             </Typography>
           </CardActionArea>
         </Box>
         <Box sx={{ p: 2 }}>
-          <Typography variant="body2">Actors: {Actors}</Typography>
+          <Typography variant="body2">Director: {Director}</Typography>
           <Typography gutterBottom variant="body2">
-            Writer: {Writer}
+            Actors: {Actors?.split("")}
           </Typography>
           <Typography gutterBottom variant="caption">
-            Genre: {Genre}
+            Awards: {Awards}
           </Typography>
+          <Box pt={1}>
+            <Typography gutterBottom variant="caption">
+              Genre: {Genre}
+            </Typography>
+          </Box>
         </Box>
       </Card>
     </>

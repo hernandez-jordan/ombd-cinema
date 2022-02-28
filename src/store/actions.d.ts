@@ -8,6 +8,7 @@ export enum UserActionType {
   SUCCESS = "SUCCESS",
   SET_MODAL_OPEN = "SET_MODAL_OPEN",
   SET_MODAL_CLOSE = "SET_MODAL_CLOSE",
+  SET_TRUNCATE = "SET_TRUNCATE",
   FIELD = "FIELD",
   SET_MOVIE_DETAIL = "SET_MOVIE_DETAIL",
   SET_MOVIE_DETAIL_BY_ID = "SET_MOVIE_DETAIL_BY_ID",
@@ -24,7 +25,8 @@ export type UserAction =
         | UserActionType.ERROR
         | UserActionType.SUCCESS
         | UserActionType.SET_MODAL_OPEN
-        | UserActionType.SET_MODAL_CLOSE;
+        | UserActionType.SET_MODAL_CLOSE
+        | UserActionType.SET_TRUNCATE;
     }
   | {
       type: UserActionType.FIELD;

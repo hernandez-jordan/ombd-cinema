@@ -7,14 +7,13 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StateContext, StateSearch } from "../../store";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MovieModal from "./MovieModal";
 
 const style = {
   cardContainer: {
-    cursor: "auto",
     alignItems: "stretch",
     transition: "transform 0.2s",
     height: "100%",
@@ -22,6 +21,10 @@ const style = {
       cursor: "pointer",
       transform: "scale(1.03) translate3d(0px, -10px, 200px)",
     },
+  },
+  cardMedia: {
+    height: "100%",
+    cursor: "default!important",
   },
   icon: {
     color: "white",
@@ -38,11 +41,25 @@ export default function MovieCard() {
   const state = useContext(StateContext);
   const { movies } = state as StateSearch;
 
+  const [favoriteMovie, setFavoriteMovie] = useState([{}]);
+
+  function handleClick(movie: {}) {
+    //TODO:add to fav
+    console.log("click", movie);
+
+    const newFavoriteMovie = [...favoriteMovie, movie];
+    setFavoriteMovie(newFavoriteMovie);
+
+    const removeDuplicateInFavorite = [...favoriteMovie].filter(
+      (item) => item === movie
+    );
+  }
+
   return (
     <>
       {movies &&
-        movies.map((item, key) => {
-          const { Poster, Title, imdbID } = item;
+        movies.map((movie, key) => {
+          const { Poster, Title, imdbID } = movie;
 
           return (
             <Grid item key={key} xs={6} sm={4} md={3}>
@@ -51,12 +68,16 @@ export default function MovieCard() {
                   component="img"
                   image={Poster}
                   alt={Title}
-                  sx={{ height: "100%" }}
+                  sx={style.cardMedia}
                 />
                 <CardActions className="overlay">
                   <Box>
                     <Tooltip title="add to favorite" arrow>
-                      <IconButton className="icon" sx={style.icon}>
+                      <IconButton
+                        onClick={() => handleClick(movie)}
+                        className="icon"
+                        sx={style.icon}
+                      >
                         <FavoriteIcon />
                       </IconButton>
                     </Tooltip>

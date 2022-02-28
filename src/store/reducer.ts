@@ -25,6 +25,7 @@ export function movieReducer(state: StateSearch, action: UserAction) {
       return {
         ...state,
         isOpen: true,
+        isTruncate: true,
       };
     case UserActionType.SET_MODAL_CLOSE:
       return {
@@ -35,6 +36,11 @@ export function movieReducer(state: StateSearch, action: UserAction) {
       return {
         ...state,
         movies: action.payload,
+      };
+    case UserActionType.SET_TRUNCATE:
+      return {
+        ...state,
+        isTruncate: !state.isTruncate,
       };
     case UserActionType.SET_MOVIE_DETAIL_BY_ID:
       return {
