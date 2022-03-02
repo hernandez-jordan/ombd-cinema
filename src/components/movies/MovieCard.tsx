@@ -7,10 +7,18 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useContext, useState } from "react";
-import { StateContext, StateSearch } from "../../store";
+import { useCallback, useContext, useState } from "react";
+import {
+  DispatchContext,
+  StateContext,
+  StateSearch,
+  UserActionType,
+  UserDispatch,
+} from "../../store";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MovieModal from "./MovieModal";
+import getMoviesById from "../../service/getMovieById";
+import InfoIcon from "@mui/icons-material/Info";
 
 const style = {
   cardContainer: {
@@ -39,8 +47,8 @@ const style = {
 
 export default function MovieCard() {
   const state = useContext(StateContext);
-  const { movies } = state as StateSearch;
-
+  const { movies, movie, isOpen } = state as StateSearch;
+  const dispatch = useContext(DispatchContext) as UserDispatch;
   const [favoriteMovie, setFavoriteMovie] = useState([{}]);
 
   function handleClick(movie: {}) {
@@ -50,10 +58,27 @@ export default function MovieCard() {
     const newFavoriteMovie = [...favoriteMovie, movie];
     setFavoriteMovie(newFavoriteMovie);
 
-    const removeDuplicateInFavorite = [...favoriteMovie].filter(
-      (item) => item === movie
+    console.log("newFavoriteMovie", newFavoriteMovie);
+
+    const uniqFavorites = new Set(
+      [...favoriteMovie].map((item) => JSON.stringify(item))
     );
+    const res = Array.from(uniqFavorites).map((e) => JSON.parse(e));
+    // setFavoriteMovie(res);
+    console.log("res", res);
   }
+
+  const handleClickOpen = useCallback(
+    async (imdbID: string) => {
+      try {
+        await getMoviesById({ imdbID, dispatch });
+        dispatch({ type: UserActionType.SET_MODAL_OPEN });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [movie]
+  );
 
   return (
     <>
@@ -83,13 +108,22 @@ export default function MovieCard() {
                     </Tooltip>
                   </Box>
                   <Box>
-                    <MovieModal imdbID={imdbID} />
+                    <Tooltip title="More info" arrow>
+                      <IconButton
+                        onClick={() => handleClickOpen(imdbID)}
+                        className="icon"
+                        sx={style.icon}
+                      >
+                        <InfoIcon />
+                      </IconButton>
+                    </Tooltip>
                   </Box>
                 </CardActions>
               </Card>
             </Grid>
           );
         })}
+      {isOpen && <MovieModal />}
     </>
   );
 }
