@@ -83,7 +83,7 @@ export default function MovieCard() {
   return (
     <>
       {movies &&
-        movies.map((movie, key) => {
+        movies.slice(0, 5).map((movie, key) => {
           const { Poster, Title, imdbID } = movie;
 
           return (

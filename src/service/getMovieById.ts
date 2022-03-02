@@ -17,6 +17,6 @@ export default async function getMoviesById({ imdbID, dispatch }: ISearchId) {
       dispatch({ type: UserActionType.SET_MOVIE_DETAIL_BY_ID, payload });
     }
   } catch (error) {
-    console.log(error, "error");
+    console.log(error);
   }
 }
