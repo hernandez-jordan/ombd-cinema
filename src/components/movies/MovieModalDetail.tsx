@@ -69,32 +69,24 @@ const style = {
   },
 };
 
-export default function MovieModalDetail({
-  Title,
-  Awards,
-  Actors,
-  Poster,
-  Rated,
-  Genre,
-  Plot,
-  Released,
-  Type,
-  Director,
-}: MovieDetailsWithId) {
+export default function MovieModalDetail() {
   const state = useContext(StateContext);
-  const { isTruncate } = state as StateSearch;
+  const { isTruncate, movie } = state as StateSearch;
   const dispatch = useContext(DispatchContext) as UserDispatch;
-  const clickHandle = () => dispatch({ type: UserActionType.SET_TRUNCATE });
 
-  const newActors = splitStringToArray(Actors!);
+  if (!movie) return null;
+
+  const newActors = splitStringToArray(movie.Actors);
+
+  const clickHandle = () => dispatch({ type: UserActionType.SET_TRUNCATE });
 
   return (
     <>
       <Card sx={style.cardContainer}>
         <CardMedia
           component="img"
-          image={Poster}
-          alt={Title}
+          image={movie.Poster}
+          alt={movie.Title}
           sx={{ height: "100%" }}
         />
         <Box sx={style.buttonContainer}>
@@ -111,21 +103,21 @@ export default function MovieModalDetail({
           <Box display="flex" justifyContent="space-between" pb={1}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="caption" gutterBottom>
-                Release date: {Released}
+                Release date: {movie.Released}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography variant="caption" gutterBottom>
-                Type: {Type}
+                Type: {movie.Type}
               </Typography>
               <Typography variant="caption" gutterBottom>
-                Rating: {Rated}
+                Rating: {movie.Rated}
               </Typography>
             </Box>
           </Box>
           <Box>
             <Typography gutterBottom noWrap={isTruncate} variant="body1">
-              {Title}
+              {movie.Title}
             </Typography>
           </Box>
           <CardActionArea
@@ -134,12 +126,12 @@ export default function MovieModalDetail({
             onClick={clickHandle}
           >
             <Typography noWrap={isTruncate} variant="body2">
-              {Plot}
+              {movie.Plot}
             </Typography>
           </CardActionArea>
         </Box>
         <Box sx={{ p: 2 }}>
-          <Typography variant="body2">Director: {Director}</Typography>
+          <Typography variant="body2">Director: {movie.Director}</Typography>
           <Box display="flex" py={1}>
             <Typography variant="body2">Actors: </Typography>
             <Box pl={1}>
@@ -155,11 +147,11 @@ export default function MovieModalDetail({
           </Box>
 
           <Typography gutterBottom variant="caption">
-            Awards: {Awards}
+            Awards: {movie.Awards}
           </Typography>
           <Box pt={1}>
             <Typography gutterBottom variant="caption">
-              Genre: {Genre}
+              Genre: {movie.Genre}
             </Typography>
           </Box>
         </Box>

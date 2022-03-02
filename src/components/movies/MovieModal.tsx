@@ -1,10 +1,8 @@
 import { useContext } from "react";
 
-import getMoviesById from "../../service/getMovieById";
 import MovieModalDetail from "./MovieModalDetail";
 import {
   DispatchContext,
-  MovieDetailsWithId,
   StateContext,
   StateSearch,
   UserActionType,
@@ -13,8 +11,6 @@ import {
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { IconButton, Tooltip } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
 
 //TODO:add cancel button for mobile?
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -33,49 +29,18 @@ const style = {
     overflow: "scroll",
     width: { xs: "100%", sm: 400 },
   },
-  icon: {
-    color: "white",
-  },
-  cardContainer: {
-    borderRadius: 0,
-    cursor: "auto",
-    alignItems: "stretch",
-    height: "100%",
-    bgcolor: "black",
-    color: "white",
-  },
 };
 
-interface MovieModalProps {
-  imdbID: string;
-}
-
-export default function MovieModal(props: MovieModalProps) {
-  const { imdbID } = props;
+export default function MovieModal() {
   const state = useContext(StateContext);
-  const { movie, isOpen } = state as StateSearch;
+  const { isOpen } = state as StateSearch;
   const dispatch = useContext(DispatchContext) as UserDispatch;
 
-  const handleClickClose = () => {
+  const handleClickClose = () =>
     dispatch({ type: UserActionType.SET_MODAL_CLOSE });
-  };
-
-  async function handleClickOpen() {
-    try {
-      await getMoviesById({ imdbID, dispatch });
-      dispatch({ type: UserActionType.SET_MODAL_OPEN });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   return (
     <Box>
-      <Tooltip title="More info" arrow>
-        <IconButton onClick={handleClickOpen} className="icon" sx={style.icon}>
-          <InfoIcon />
-        </IconButton>
-      </Tooltip>
       <Modal
         sx={style.modal}
         BackdropProps={{ invisible: true }}
@@ -86,7 +51,7 @@ export default function MovieModal(props: MovieModalProps) {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box className="test" sx={style.container}>
-          <MovieModalDetail {...(movie as unknown as MovieDetailsWithId)} />
+          <MovieModalDetail />
         </Box>
       </Modal>
     </Box>
