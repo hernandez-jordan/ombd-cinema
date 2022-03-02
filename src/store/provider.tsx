@@ -7,7 +7,7 @@ const initialState: StateSearch = {
   movies: [],
   isLoading: false,
   error: "",
-  movie: [],
+  movie: {} as MovieDetailsWithId,
   favoriteMovies: [],
   isOpen: false,
   isTruncate: true,
@@ -18,7 +18,7 @@ export interface StateSearch {
   movies: MovieDetails[];
   isLoading: boolean;
   error: string;
-  movie: MovieDetailsWithId[];
+  movie: MovieDetailsWithId;
   favoriteMovies: MovieDetails[];
   isOpen: boolean;
   isTruncate: boolean;
@@ -33,7 +33,7 @@ export interface MovieDetails {
 }
 
 export interface MovieDetailsWithId {
-  Actors?: string;
+  Actors: string;
   Awards?: string;
   Country?: string;
   Director?: string;
@@ -43,7 +43,6 @@ export interface MovieDetailsWithId {
   Plot?: string;
   Poster?: string;
   Rated?: string;
-  Ratings?: [];
   Released?: string;
   Response?: string;
   Runtime?: string;

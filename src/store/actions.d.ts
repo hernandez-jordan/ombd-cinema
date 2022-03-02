@@ -1,6 +1,6 @@
 import { MovieDetails, MovieDetailsWithId } from "./provider";
 export type SetMovieDetailType = MovieDetails[];
-export type SetMovieDetailByIdType = MovieDetailsWithId[];
+export type SetMovieDetailByIdType = MovieDetailsWithId;
 
 export enum UserActionType {
   SEARCH = "SEARCH",
