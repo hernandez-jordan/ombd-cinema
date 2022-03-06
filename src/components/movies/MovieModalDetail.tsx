@@ -74,8 +74,6 @@ export default function MovieModalDetail() {
   const { isTruncate, movie } = state as StateSearch;
   const dispatch = useContext(DispatchContext) as UserDispatch;
 
-  if (!movie) return null;
-
   const newActors = splitStringToArray(movie.Actors);
 
   const clickHandle = () => dispatch({ type: UserActionType.SET_TRUNCATE });

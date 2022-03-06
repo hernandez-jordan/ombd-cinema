@@ -22,7 +22,7 @@ export default function Movies() {
       <Box
         display="flex"
         flexDirection={{ xs: "column-reverse", sm: "row" }}
-        alignItems={{ sm: "flex-start", md: "center" }}
+        alignItems={{ md: "center" }}
         justifyContent="space-between"
         pb={2}
         pt={{ xs: 2 }}
