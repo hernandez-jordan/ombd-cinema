@@ -1,13 +1,17 @@
 import {
   Box,
+  Divider,
   FormControl,
   FormControlLabel,
+  IconButton,
+  InputBase,
   Switch,
   TextField,
   Tooltip,
 } from "@mui/material";
 import { useContext, useState } from "react";
 import getMovies from "../../service/getMovies";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   DispatchContext,
   FieldNameType,
@@ -19,7 +23,20 @@ import {
 
 const style = {
   formControl: {
-    width: { xs: "100%", sm: 250 },
+    width: { xs: "100%" },
+  },
+  formControlLabel: {
+    ml: 1,
+    width: 100,
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      color: "red",
+      "&:hover": {
+        backgroundColor: "rgb(255 255 255 / 5%)",
+      },
+    },
+    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+      backgroundColor: "red",
+    },
   },
   form: {
     display: "flex",
@@ -67,16 +84,18 @@ export default function SearchBar() {
   }
 
   return (
-    <Box>
+    <Box
+      sx={{ width: { xs: "-webkit-fill-available%" } }}
+      display="flex"
+      alignItems="center"
+    >
       <FormControl sx={style.formControl}>
         <form onSubmit={handleSubmit} className="form">
-          <TextField
-            type="text"
-            label="Search"
-            variant="standard"
-            sx={style.textfield}
+          <InputBase
+            sx={{ ml: 1, flex: 1, color: "white" }}
+            placeholder="Search Movies"
+            inputProps={{ "aria-label": "search movies" }}
             value={movieName}
-            autoComplete="on"
             onChange={(e) =>
               dispatch({
                 type: UserActionType.FIELD,
@@ -85,9 +104,21 @@ export default function SearchBar() {
               })
             }
           />
+          <IconButton
+            type="submit"
+            onSubmit={handleSubmit}
+            sx={{ p: "10px", color: "white" }}
+            aria-label="search"
+          >
+            <SearchIcon />
+          </IconButton>
+          <Divider
+            sx={{ height: 28, m: 0.5, backgroundColor: "#ffffff2e" }}
+            orientation="vertical"
+          />
           <Tooltip title="Plot" arrow>
             <FormControlLabel
-              sx={{ ml: 1 }}
+              sx={style.formControlLabel}
               control={<Switch onChange={checkPlot} />}
               label={plot ? "Full" : "Short"}
             />
