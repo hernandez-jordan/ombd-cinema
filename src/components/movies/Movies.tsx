@@ -28,7 +28,7 @@ export default function Movies() {
         pt={{ xs: 2 }}
       >
         <Typography
-          sx={{ typography: { lg: "h3", md: "h4", xs: "h5" } }}
+          sx={{ typography: { md: "h4", xs: "h5" } }}
           align="left"
           py={{ xs: 1, sm: 2, md: 3 }}
           pt={{ xs: 2 }}
@@ -39,9 +39,6 @@ export default function Movies() {
       </Box>
       <Grid container spacing={3} className="row" sx={style.gridContainer}>
         {isLoading ? <Loader /> : <MovieCard />}
-      </Grid>
-      <Grid container spacing={3} className="row" sx={style.gridContainer}>
-        {/* //TODO:add favorites */}
       </Grid>
     </>
   );
