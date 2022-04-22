@@ -7,13 +7,14 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 import {
   DispatchContext,
   StateContext,
   StateSearch,
   UserActionType,
   UserDispatch,
+  MovieDetails,
 } from "../../store";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MovieModal from "./MovieModal";
@@ -23,16 +24,18 @@ import InfoIcon from "@mui/icons-material/Info";
 const style = {
   cardContainer: {
     alignItems: "stretch",
-    transition: "transform 0.2s",
     height: "100%",
     "&:hover": {
       cursor: "pointer",
-      transform: "scale(1.03) translate3d(0px, -10px, 200px)",
     },
   },
   cardMedia: {
     height: "100%",
-    cursor: "default!important",
+    cursor: "pointer",
+    transition: "transform 0.75s",
+    "&:hover": {
+      transform: "scale(1.05)",
+    },
   },
   icon: {
     color: "white",
@@ -47,34 +50,27 @@ const style = {
 
 export default function MovieCard() {
   const state = useContext(StateContext);
-  const { movies, movie, isOpen } = state as StateSearch;
+  const { movies, movie, isOpen, favoriteMovies } = state as StateSearch;
   const dispatch = useContext(DispatchContext) as UserDispatch;
-  const [favoriteMovie, setFavoriteMovie] = useState([{}]);
 
-  function handleClick(movie: {}) {
-    //TODO:add to fav
-    console.log("click", movie);
-
-    const newFavoriteMovie = [...favoriteMovie, movie];
-    setFavoriteMovie(newFavoriteMovie);
-
-    console.log("newFavoriteMovie", newFavoriteMovie);
-
-    const uniqFavorites = new Set(
-      [...favoriteMovie].map((item) => JSON.stringify(item))
-    );
-    const res = Array.from(uniqFavorites).map((e) => JSON.parse(e));
-    // setFavoriteMovie(res);
-    console.log("res", res);
+  function handleClick(movie: MovieDetails) {
+    const favorites = [...favoriteMovies, movie];
+    //remove duplicates from favorites[]
+    const payload = [...new Set(favorites)];
+    dispatch({ type: UserActionType.SET_FAV_MOVIE, payload });
   }
 
   const handleClickOpen = useCallback(
-    async (imdbID: string) => {
+    async (imdbIDx: string) => {
+      //TODO: fix error?
+      let imdbID = "123";
       try {
         await getMoviesById({ imdbID, dispatch });
+        console.log(imdbID, "imdbID");
         dispatch({ type: UserActionType.SET_MODAL_OPEN });
       } catch (error) {
         console.log(error);
+        throw new Error("Movie ID doesn't exist");
       }
     },
     [movie]
@@ -83,7 +79,7 @@ export default function MovieCard() {
   return (
     <>
       {movies &&
-        movies.slice(0, 5).map((movie, key) => {
+        movies.map((movie, key) => {
           const { Poster, Title, imdbID } = movie;
 
           return (
