@@ -12,9 +12,6 @@ import {
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
-//TODO:add cancel button for mobile?
-import CancelIcon from "@mui/icons-material/Cancel";
-
 const style = {
   modal: {
     overflow: "scroll",
