@@ -21,6 +21,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import { splitStringToArray } from "../../util/string-conversions";
+//TODO:add cancel button for mobile?
+import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 
 const style = {
   modal: {
@@ -49,6 +51,7 @@ const style = {
     height: "100%",
     bgcolor: "black",
     color: "white",
+    position: "relative",
   },
   button: {
     bgcolor: "white",
@@ -67,6 +70,16 @@ const style = {
     display: "flex",
     justifyContent: "center",
   },
+  iconClose: {
+    color: "white",
+    background: "black",
+    borderRadius: "50%",
+    transition:
+      "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 0.2s ,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    "&:hover": {
+      transform: "scale(1.3)",
+    },
+  },
 };
 
 export default function MovieModalDetail() {
@@ -78,9 +91,24 @@ export default function MovieModalDetail() {
 
   const clickHandle = () => dispatch({ type: UserActionType.SET_TRUNCATE });
 
+  const handleClickClose = () =>
+    dispatch({ type: UserActionType.SET_MODAL_CLOSE });
+
   return (
     <>
       <Card sx={style.cardContainer}>
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          position="absolute"
+          right="0px"
+        >
+          <Tooltip title="close modal" arrow>
+            <IconButton onClick={handleClickClose} className="icon">
+              <CancelTwoToneIcon sx={style.iconClose} />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <CardMedia
           component="img"
           image={movie.Poster}
