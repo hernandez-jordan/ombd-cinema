@@ -62,11 +62,9 @@ export default function MovieCard() {
 
   const handleClickOpen = useCallback(
     async (imdbIDx: string) => {
-      //TODO: fix error?
       let imdbID = "123";
       try {
         await getMoviesById({ imdbID, dispatch });
-        console.log(imdbID, "imdbID");
         dispatch({ type: UserActionType.SET_MODAL_OPEN });
       } catch (error) {
         console.log(error);
