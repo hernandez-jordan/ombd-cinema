@@ -12,6 +12,7 @@ export enum UserActionType {
   FIELD = "FIELD",
   SET_MOVIE_DETAIL = "SET_MOVIE_DETAIL",
   SET_MOVIE_DETAIL_BY_ID = "SET_MOVIE_DETAIL_BY_ID",
+  SET_FAV_MOVIE = "SET_FAV_MOVIE",
 }
 
 export enum FieldNameType {
@@ -40,6 +41,10 @@ export type UserAction =
   | {
       type: UserActionType.SET_MOVIE_DETAIL_BY_ID;
       payload: SetMovieDetailByIdType;
+    }
+  | {
+      type: UserActionType.SET_FAV_MOVIE;
+      payload: SetMovieDetailType;
     };
 
 export type UserProviderProps = {
