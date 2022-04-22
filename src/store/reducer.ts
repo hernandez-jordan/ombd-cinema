@@ -47,6 +47,11 @@ export function movieReducer(state: StateSearch, action: UserAction) {
         ...state,
         movie: action.payload,
       };
+    case UserActionType.SET_FAV_MOVIE:
+      return {
+        ...state,
+        favoriteMovies: action.payload,
+      };
     case UserActionType.FIELD:
       return {
         ...state,
